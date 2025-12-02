@@ -352,6 +352,15 @@ const router = createRouter({
       component: () => import("@/views/user/grid/index.vue"),
     },
     {
+      path: "/user/settings",
+      name: "Account Settings",
+      meta: {
+        title: "Account Settings",
+        requiresAuth: true,
+      },
+      component: () => import("@/views/user/settings/index.vue"),
+    },
+    {
       path: "/starter",
       name: "Starter Page",
       meta: {

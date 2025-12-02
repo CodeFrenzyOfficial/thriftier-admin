@@ -66,7 +66,7 @@
                 <div class="md:col-span-2">
                   <label
                     for="email"
-                    class="block font-medium text-default-900 dark:text-default-100 text-sm mb-2"
+                    class="block font-medium !text-default-900 dark:text-default-100 text-sm mb-2"
                   >
                     Email Address <span class="text-red-500">*</span>
                   </label>
