@@ -38,6 +38,17 @@ export const adminMenuItems: MenuItemType[] = [
     icon: "lucide:square-user-round",
     url: "/user",
   },
+  {
+    key: "account-title",
+    label: "Account",
+    isTitle: true,
+  },
+  {
+    key: "settings",
+    label: "Account Settings",
+    icon: "lucide:settings",
+    url: "/user/settings",
+  },
 ];
 
 /**
@@ -81,6 +92,7 @@ export const userMenuItems: MenuItemType[] = [
     icon: "lucide:user",
     children: [
       { key: "profile", label: "Profile", url: "/user/grid" },
+      { key: "settings", label: "Account Settings", url: "/user/settings" },
       { key: "orders", label: "Order History", url: "/ecommerce/order" },
     ],
   },
@@ -165,7 +177,10 @@ export const driverMenuItems: MenuItemType[] = [
     key: "profile",
     label: "My Profile",
     icon: "lucide:user",
-    url: "/user/grid",
+    children: [
+      { key: "view-profile", label: "View Profile", url: "/user/grid" },
+      { key: "settings", label: "Account Settings", url: "/user/settings" },
+    ],
   },
   {
     key: "support",

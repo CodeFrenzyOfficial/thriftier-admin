@@ -68,7 +68,7 @@
                 <div class="md:col-span-2">
                   <label
                     for="email"
-                    class="block font-medium text-default-900 dark:text-default-100 text-sm mb-2"
+                    class="block font-medium !text-default-900 dark:text-default-100 text-sm mb-2"
                   >
                     Email Address <span class="text-red-500">*</span>
                   </label>
@@ -87,7 +87,7 @@
                 <div class="md:col-span-2">
                   <label
                     for="phoneNumber"
-                    class="block font-medium text-default-900 dark:text-default-100 text-sm mb-2"
+                    class="block font-medium !text-default-900 dark:text-default-100 text-sm mb-2"
                   >
                     Phone Number <span class="text-red-500">*</span>
                   </label>
@@ -104,7 +104,7 @@
                 <div>
                   <label
                     for="name"
-                    class="block font-medium text-default-900 dark:text-default-100 text-sm mb-2"
+                    class="block font-medium !text-default-900 dark:text-default-100 text-sm mb-2"
                   >
                     Full Name <span class="text-red-500">*</span>
                   </label>
@@ -123,7 +123,7 @@
                 <div>
                   <label
                     for="location"
-                    class="block font-medium text-default-900 dark:text-default-100 text-sm mb-2"
+                    class="block font-medium !text-default-900 dark:text-default-100 text-sm mb-2"
                   >
                     Location <span class="text-red-500">*</span>
                   </label>
@@ -142,7 +142,7 @@
                 <div>
                   <label
                     for="role"
-                    class="block font-medium text-default-900 dark:text-default-100 text-sm mb-2"
+                    class="block font-medium !text-default-900 dark:text-default-100 text-sm mb-2"
                   >
                     Role <span class="text-red-500">*</span>
                   </label>
@@ -163,7 +163,7 @@
                 <div>
                   <label
                     for="password"
-                    class="block font-medium text-default-900 dark:text-default-100 text-sm mb-2"
+                    class="block font-medium !text-default-900 dark:text-default-100 text-sm mb-2"
                   >
                     Password <span class="text-red-500">*</span>
                   </label>
