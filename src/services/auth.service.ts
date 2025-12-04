@@ -34,6 +34,8 @@ export interface AuthResponse {
     email: string;
     role: string;
     emailVerified: boolean;
+    location?: string;
+    phoneNumber?: string;
   };
   tokens: {
     accessToken: string;
@@ -51,6 +53,8 @@ export interface UserProfile {
   email: string;
   role: string;
   emailVerified: boolean;
+  location?: string;
+  phoneNumber?: string;
   createdAt: string;
   updatedAt: string;
 }

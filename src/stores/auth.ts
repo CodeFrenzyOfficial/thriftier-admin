@@ -17,6 +17,8 @@ interface User {
   email: string;
   role: string;
   emailVerified: boolean;
+  location: string;
+  phoneNumber: string;
 }
 
 export const useAuthStore = defineStore(
@@ -46,7 +48,11 @@ export const useAuthStore = defineStore(
         console.log("Auth Store - Login response:", response);
         console.log("Auth Store - Setting user to:", response.user);
 
-        user.value = response.user;
+        user.value = {
+          ...response.user,
+          location: response.user?.location || "",
+          phoneNumber: response.user?.phoneNumber || "",
+        };
 
         console.log("Auth Store - User set to:", user.value);
         console.log("Auth Store - isAuthenticated:", isAuthenticated.value);
@@ -67,7 +73,11 @@ export const useAuthStore = defineStore(
 
       try {
         const response = await authService.register(data);
-        user.value = response.user;
+        user.value = {
+          ...response.user,
+          location: response.user?.location || "",
+          phoneNumber: response.user?.phoneNumber || "",
+        };
         return response;
       } catch (err: any) {
         error.value = err.message || "Registration failed";
@@ -108,6 +118,8 @@ export const useAuthStore = defineStore(
           email: profile.email,
           role: profile.role,
           emailVerified: profile.emailVerified,
+          location: profile?.location || "",
+          phoneNumber: profile?.phoneNumber || "",
         };
       } catch (err: any) {
         error.value = err.message || "Failed to fetch user";

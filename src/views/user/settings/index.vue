@@ -338,10 +338,10 @@ onMounted(async () => {
     profileForm.value = {
       email: authStore.user.email || "",
       name: authStore.user.name || "",
-      location: authStore.user.location || "",
-      phoneNumber: authStore.user.phoneNumber || "",
+      location: authStore.user?.location || "",
+      phoneNumber: authStore.user?.phoneNumber || "",
     };
-    phoneNumber.value = authStore.user.phoneNumber || "";
+    phoneNumber.value = authStore.user?.phoneNumber || "";
   }
 });
 
