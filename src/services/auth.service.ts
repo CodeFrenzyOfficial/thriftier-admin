@@ -7,9 +7,15 @@ import api from "./api";
 import Cookies from "js-cookie";
 
 // Cookie configuration
+// NOTE: 'secure' cookies are only sent over HTTPS.
+// On your EC2/IP over plain http, they would NOT be stored if secure=true.
+// So we enable secure only when the app is actually served via https.
 const COOKIE_OPTIONS = {
   expires: 7, // 7 days
-  secure: import.meta.env.PROD, // Only use secure in production
+  secure:
+    typeof window !== "undefined"
+      ? window.location.protocol === "https:"
+      : false,
   sameSite: "strict" as const,
 };
 
