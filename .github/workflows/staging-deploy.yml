@@ -1,0 +1,102 @@
+name: Frontend Staging Deployment
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      NODE_VERSION: "20.x"
+
+    steps:
+      - name: 🚀 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: 📥 Install dependencies
+        run: npm ci
+
+      - name: 🔧 Create .env.production file
+        run: |
+          cat > .env.production << 'EOF'
+          VITE_API_URL=${{ secrets.STAGING_API_URL }}
+          VITE_APP_NAME=${{ secrets.VITE_APP_NAME }}
+          VITE_APP_ENV=staging
+          EOF
+
+      - name: 🏗️ Build application
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: 📋 Create deployment package
+        run: |
+          cd dist
+          tar -czf ../frontend-build.tar.gz .
+          cd ..
+
+      - name: 🔐 Setup SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.STAGING_SSH_KEY }}
+
+      - name: 📤 Deploy to staging server
+        env:
+          STAGING_HOST: ${{ secrets.STAGING_HOST }}
+          STAGING_USER: ${{ secrets.STAGING_USER }}
+          STAGING_FRONTEND_PATH: ${{ secrets.STAGING_FRONTEND_PATH }}
+        run: |
+          # Add server to known hosts
+          ssh-keyscan -H $STAGING_HOST >> ~/.ssh/known_hosts
+
+          # Upload deployment package
+          scp frontend-build.tar.gz $STAGING_USER@$STAGING_HOST:$STAGING_FRONTEND_PATH/
+
+          # Execute deployment script on server
+          ssh $STAGING_USER@$STAGING_HOST << 'EOF'
+            cd ${{ secrets.STAGING_FRONTEND_PATH }}
+
+            # Backup current version
+            if [ -d "current" ]; then
+              mv current backup-$(date +%Y%m%d-%H%M%S)
+            fi
+
+            # Create new directory
+            mkdir -p current
+
+            # Extract new version
+            tar -xzf frontend-build.tar.gz -C current/
+
+            # Cleanup
+            rm frontend-build.tar.gz
+
+            # Keep only last 3 backups
+            ls -t backup-* 2>/dev/null | tail -n +4 | xargs rm -rf
+
+            # Restart Nginx (if needed)
+            sudo systemctl reload nginx || echo "Nginx reload skipped"
+
+            echo "Frontend deployed successfully!"
+          EOF
+
+      - name: ✅ Deployment successful
+        run: |
+          echo "🎉 Frontend deployed to staging successfully!"
+          echo "🔗 Staging URL: ${{ secrets.STAGING_FRONTEND_URL }}"
+          echo "📅 Deployed at: $(date)"
+
+      - name: 🚨 Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Deployment failed!"
+          echo "Please check the logs above for details."
+
