@@ -1,24 +1,24 @@
 <template>
   <div
-    class="relative flex w-full flex-row-reverse overflow-hidden bg-gradient-to-r from-blue-900 h-screen to-blue-800 dark:to-blue-900 dark:from-blue-950 justify-center items-center"
+    class="relative flex w-full flex-col-reverse md:flex-row-reverse overflow-hidden bg-gradient-to-r from-blue-900 min-h-screen to-blue-800 dark:to-blue-900 dark:from-blue-950 justify-center items-stretch"
   >
     <div class="absolute inset-0 opacity-20">
       <img :src="modern" alt="" />
     </div>
     <div
-      class="w-1/2 py-14 px-10 flex rounded-md text-center relative z-10 items-center justify-center"
+      class="w-full md:w-1/2 px-4 py-10 md:px-10 flex rounded-md text-center relative z-10 items-center justify-center"
     >
       <div
-        class="flex flex-col w-full max-w-lg mx-auto bg-card p-10 rounded-md"
+        class="flex flex-col w-full max-w-lg mx-auto bg-card p-6 md:p-10 rounded-md overflow-hidden"
       >
         <h1 class="text-2xl font-bold text-center">Login</h1>
         <p class="text-sm text-default-500 text-center mt-4">
           Welcome back to Thrifter. Please enter your email and password to
           login.
         </p>
-        <div class="">
-          <div class="">
-            <div class="w-100 mx-auto">
+        <div class="w-full">
+          <div class="w-full">
+            <div class="w-full">
               <div
                 id="tabsForEmail"
                 role="tabpanel"
@@ -26,7 +26,7 @@
               >
                 <form
                   @submit.prevent="handleEmailLogin"
-                  class="text-left w-full mt-10"
+                  class="text-left w-full mt-6 md:mt-10"
                 >
                   <!-- Error Message -->
                   <div
@@ -40,7 +40,7 @@
                     {{ errorMessage }}
                   </div>
 
-                  <div class="mb-4">
+                  <div class="mb-4 w-full">
                     <label
                       for="emailInput"
                       class="block font-medium text-default-900 text-sm mb-2"
@@ -50,13 +50,13 @@
                       v-model="emailForm.email"
                       type="email"
                       id="emailInput"
-                      class="form-input"
+                      class="form-input w-full"
                       placeholder="Enter your email"
                       required
                       :disabled="isLoading"
                     />
                   </div>
-                  <div class="mb-4">
+                  <div class="mb-4 w-full">
                     <RouterLink
                       to="/mordern-auth/reset-pass"
                       class="text-primary font-medium text-sm mb-2 float-end"
@@ -71,13 +71,13 @@
                       v-model="emailForm.password"
                       type="password"
                       id="emailPassword"
-                      class="form-input"
+                      class="form-input w-full"
                       placeholder="Enter Password"
                       required
                       :disabled="isLoading"
                     />
                   </div>
-                  <div class="flex items-center gap-2 mb-4">
+                  <div class="flex items-center gap-2 mb-4 w-full">
                     <input
                       v-model="emailForm.rememberMe"
                       id="remember-email"
@@ -90,7 +90,7 @@
                       >Remember Me</label
                     >
                   </div>
-                  <div class="mt-10 text-center">
+                  <div class="mt-6 md:mt-10 text-center w-full">
                     <button
                       type="submit"
                       class="btn bg-primary text-white w-full"
@@ -131,7 +131,7 @@
       </div>
     </div>
     <div
-      class="relative z-10 flex items-center justify-center min-h-screen px-8 py-14 w-1/2"
+      class="relative z-10 flex items-center justify-center w-full md:w-1/2 px-6 py-8 md:px-8 md:py-14 min-h-[260px] md:min-h-screen"
     >
       <div class="max-w-xl mx-auto">
         <RouterLink to="/">
