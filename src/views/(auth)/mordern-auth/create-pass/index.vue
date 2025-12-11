@@ -82,7 +82,7 @@
               icon="lucide:copyright"
               class="iconify align-middle text-default-500"
             ></Icon
-            >{{ new Date().getFullYear() }} Thrifter. Crafted with
+            >{{ new Date().getFullYear() }} Thriftier. Crafted with
             <Icon
               icon="tabler:heart-filled"
               class="iconify align-middle text-danger"
@@ -91,7 +91,7 @@
             <RouterLink
               to=""
               class="text-mono hover:text-primary transition duration-200 underline"
-              >Thrifter</RouterLink
+              >Thriftier</RouterLink
             >
           </span>
         </div>

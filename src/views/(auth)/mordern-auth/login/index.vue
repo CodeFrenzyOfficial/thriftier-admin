@@ -13,7 +13,7 @@
       >
         <h1 class="text-2xl font-bold text-center">Login</h1>
         <p class="text-sm text-default-500 text-center mt-4">
-          Welcome back to Thrifter. Please enter your email and password to
+          Welcome back to Thriftier. Please enter your email and password to
           login.
         </p>
         <div class="w-full">
@@ -114,7 +114,7 @@
         <div class="mt-5">
           <span class="text-sm text-default-500">
             <Icon icon="lucide:copyright" class="iconify align-middle"></Icon>
-            {{ new Date().getFullYear() }} Thrifter. Crafted with
+            {{ new Date().getFullYear() }} Thriftier. Crafted with
             <Icon
               icon="tabler:heart-filled"
               class="iconify align-middle text-danger"
@@ -124,7 +124,7 @@
               to="#"
               target="_blank"
               class="text-default-800 hover:text-primary transition duration-200 underline"
-              >Thrifter</RouterLink
+              >Thriftier</RouterLink
             >
           </span>
         </div>

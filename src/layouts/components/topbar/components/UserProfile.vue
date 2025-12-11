@@ -19,7 +19,7 @@
       aria-labelledby="hs-dropdown-with-icons"
     >
       <div class="p-2">
-        <h6 class="mb-2 text-default-500">Welcome to Thrifter Store</h6>
+        <h6 class="mb-2 text-default-500">Welcome to Thriftier Store</h6>
         <div class="flex gap-3">
           <div class="relative inline-block">
             <div class="rounded bg-default-200">
