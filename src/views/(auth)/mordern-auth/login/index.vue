@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative flex w-full flex-col-reverse md:flex-row-reverse overflow-hidden bg-gradient-to-r from-blue-900 min-h-screen to-blue-800 dark:to-blue-900 dark:from-blue-950 justify-center items-stretch"
+    class="relative flex w-full flex-col-reverse md:flex-row-reverse overflow-hidden min-h-screen justify-center items-stretch"
   >
     <div class="absolute inset-0 opacity-20">
       <img :src="modern" alt="" />
@@ -135,7 +135,11 @@
     >
       <div class="max-w-xl mx-auto">
         <RouterLink to="/">
-          <img :src="logolight" alt="" class="h-7 mb-14 mx-auto block" />
+          <img
+            src="@/assets/images/oglogo.png"
+            alt=""
+            class="h-32 mb-14 mx-auto block"
+          />
         </RouterLink>
         <img
           :src="logomodern"

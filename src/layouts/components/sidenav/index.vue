@@ -1,8 +1,15 @@
 <template>
   <aside id="app-menu" class="app-menu">
-    <RouterLink to="/" class="logo-box sticky top-0 flex min-h-topbar-height items-center justify-start px-6 backdrop-blur-xs">
+    <RouterLink
+      to="/"
+      class="logo-box sticky top-0 flex min-h-topbar-height items-center justify-center px-6 backdrop-blur-xs my-10"
+    >
       <div class="logo-light">
-        <img :src="lightlogo" class="logo-lg h-6" alt="Light logo" />
+        <img
+          src="@/assets/images/oglogo.png"
+          class="logo-lg h-20"
+          alt="Light logo"
+        />
         <img :src="logo" class="logo-sm h-6" alt="Small logo" />
       </div>
       <div class="logo-dark">
@@ -26,18 +33,20 @@
 </template>
 
 <script setup lang="ts">
-import { Icon } from '@iconify/vue'
-import darklogo from '@/assets/images/logo-dark.png'
-import lightlogo from '@/assets/images/logo-light.png'
-import logo from '@/assets/images/logo-sm.png'
-import { useLayout } from '@/stores/layout'
-import AppMenu from './components/AppMenu.vue'
-import simplebar from 'simplebar-vue'
-import { RouterLink } from 'vue-router'
+import { Icon } from "@iconify/vue";
+import darklogo from "@/assets/images/logo-dark.png";
+import lightlogo from "@/assets/images/logo-light.png";
+import logo from "@/assets/images/logo-sm.png";
+import { useLayout } from "@/stores/layout";
+import AppMenu from "./components/AppMenu.vue";
+import simplebar from "simplebar-vue";
+import { RouterLink } from "vue-router";
 
-const { layout, setSideNavSize } = useLayout()
+const { layout, setSideNavSize } = useLayout();
 
 const toggleSidebar = () => {
-  setSideNavSize(layout.sidenav.size === 'hover-active' ? 'hover' : 'hover-active')
-}
+  setSideNavSize(
+    layout.sidenav.size === "hover-active" ? "hover" : "hover-active"
+  );
+};
 </script>
