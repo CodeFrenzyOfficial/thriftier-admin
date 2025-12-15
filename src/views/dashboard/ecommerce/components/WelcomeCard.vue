@@ -2,7 +2,9 @@
   <div class="card-body relative overflow-hidden bg-zinc-900 rounded-md mb-5">
     <div class="relative z-10 grid grid-cols-12 items-center">
       <div class="lg:col-span-8 col-span-12">
-        <h5 class="mb-3 text-lg text-white">Welcome Ashley 🎉</h5>
+        <h5 class="mb-3 text-lg text-white">
+          Welcome {{ useAuthStore()?.user?.name }} 🎉
+        </h5>
         <p class="mb-5 text-white/70 text-sm">
           An ecommerce dashboard has just that purpose. It provides your
           ecommerce team with a clear overview of key financial and website KPIs
@@ -790,4 +792,5 @@
 
 <script setup lang="ts">
 import dashboard from "@/assets/images/dashboard.png";
+import { useAuthStore } from "@/stores/auth";
 </script>
