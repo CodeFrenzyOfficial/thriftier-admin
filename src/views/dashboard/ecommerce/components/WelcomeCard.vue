@@ -793,4 +793,8 @@
 <script setup lang="ts">
 import dashboard from "@/assets/images/dashboard.png";
 import { useAuthStore } from "@/stores/auth";
+
+const takeProduct = () => {
+  console.log("takeProduct");
+};
 </script>
