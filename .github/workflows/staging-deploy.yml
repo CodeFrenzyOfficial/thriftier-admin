@@ -65,32 +65,34 @@ jobs:
           ssh $STAGING_USER@$STAGING_HOST "
             cd $DEPLOY_PATH
 
-            # Backup existing dist folder
-            if [ -d 'dist' ]; then
-              rm -rf dist.backup
-              mv dist dist.backup
+            # Backup current version
+            if [ -d 'current' ]; then
+              mv current backup-\$(date +%Y%m%d-%H%M%S)
             fi
 
-            # Create fresh dist directory
-            mkdir -p dist
+            # Create new directory
+            mkdir -p current
 
-            # Extract new version directly to dist
-            tar -xzf frontend-build.tar.gz -C dist/
+            # Extract new version
+            tar -xzf frontend-build.tar.gz -C current/
 
-            # Cleanup tar file
+            # Cleanup
             rm frontend-build.tar.gz
+
+            # Keep only last 3 backups
+            ls -t backup-* 2>/dev/null | tail -n +4 | xargs rm -rf 2>/dev/null || true
 
             # Reload Nginx to serve new files
             sudo systemctl reload nginx || echo 'Nginx reload skipped (run manually if needed)'
 
-            echo '✅ Thrifter Admin deployed successfully to $DEPLOY_PATH/dist'
+            echo '✅ Thrifter Admin deployed successfully to $DEPLOY_PATH/current'
           "
 
       - name: ✅ Deployment successful
         run: |
           echo "🎉 Thrifter Admin deployed to staging successfully!"
-          echo "📂 Server path: /var/www/thrifter-admin-staging/dist"
-          echo "🔗 Access your admin panel at: https://admin.gothriftier.com"
+          echo "📂 Server path: /var/www/thrifter-admin-staging/current"
+          echo "🔗 Access your admin panel at: http://${{ secrets.STAGING_HOST }}"
           echo "📅 Deployed at: $(date)"
 
       - name: 🚨 Notify on failure
