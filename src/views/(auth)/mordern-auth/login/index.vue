@@ -114,7 +114,7 @@
         <div class="mt-5">
           <span class="text-sm text-default-500">
             <Icon icon="lucide:copyright" class="iconify align-middle"></Icon>
-            {{ new Date().getFullYear() }} Thriftier. Crafted with
+            {{ new Date().getFullYear() }} Thriftier.
             <Icon
               icon="tabler:heart-filled"
               class="iconify align-middle text-danger"
