@@ -5,8 +5,7 @@
 
 import Cookies from "js-cookie";
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:3000/v1";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/v1";
 
 interface RequestOptions extends RequestInit {
   params?: Record<string, string>;
