@@ -26,7 +26,7 @@
               class="flex items-center justify-between p-6 border-b border-default-200"
             >
               <h3 class="text-xl font-semibold text-default-900">
-                Add New User
+                {{ props.title || "Add New User" }}
               </h3>
               <button
                 @click="closeModal"
@@ -234,6 +234,7 @@ const results = ref<MazInputPhoneNumberData>();
 
 interface Props {
   isOpen: boolean;
+  title?: string;
 }
 
 interface Emits {

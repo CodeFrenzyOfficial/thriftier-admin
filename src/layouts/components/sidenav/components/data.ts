@@ -18,25 +18,37 @@ export const adminMenuItems: MenuItemType[] = [
 
   {
     key: "apps-title",
-    label: "Apps",
+    label: "Management",
     isTitle: true,
   },
-
-  // {
-  //   key: "invoice",
-  //   label: "Invoice",
-  //   icon: "lucide:file-text",
-  //   children: [
-  //     { key: "overview", label: "Overview", url: "/invoice/overview" },
-  //     { key: "list", label: "List Invoice", url: "/invoice/list" },
-  //     { key: "add", label: "Add Invoice", url: "/invoice/add" },
-  //   ],
-  // },
   {
-    key: "users",
-    label: "Users",
-    icon: "lucide:square-user-round",
-    url: "/user",
+    key: "orders",
+    label: "Orders",
+    icon: "lucide:package",
+    url: "/orders",
+  },
+  {
+    key: "drivers",
+    label: "Drivers",
+    icon: "lucide:truck",
+    url: "/drivers",
+  },
+  {
+    key: "employees",
+    label: "Employees",
+    icon: "lucide:users-round",
+    url: "/employees",
+  },
+  {
+    key: "analytics-title",
+    label: "Analytics",
+    isTitle: true,
+  },
+  {
+    key: "analytics",
+    label: "Analytics Dashboard",
+    icon: "lucide:bar-chart-3",
+    url: "/analytics",
   },
   {
     key: "account-title",
@@ -118,78 +130,42 @@ export const userMenuItems: MenuItemType[] = [
 export const driverMenuItems: MenuItemType[] = [
   {
     key: "driver-title",
-    label: "Driver Dashboard",
+    label: "Overview",
     isTitle: true,
   },
   {
     key: "dashboard",
     label: "Dashboard",
     icon: "lucide:layout-dashboard",
-    url: "/dashboard",
-  },
-  {
-    key: "deliveries",
-    label: "Deliveries",
-    icon: "lucide:truck",
-    children: [
-      { key: "pending", label: "Pending Deliveries", url: "/ecommerce/order" },
-      { key: "in-progress", label: "In Progress", url: "/ecommerce/order" },
-      { key: "completed", label: "Completed", url: "/ecommerce/order" },
-    ],
-  },
-  {
-    key: "orders",
-    label: "Order Management",
-    icon: "lucide:package",
-    children: [
-      { key: "view-orders", label: "View Orders", url: "/ecommerce/order" },
-      {
-        key: "order-details",
-        label: "Order Details",
-        url: "/ecommerce/order-detail",
-      },
-    ],
-  },
-  {
-    key: "routes",
-    label: "Routes & Maps",
-    icon: "lucide:map",
-    url: "/apps/calendar",
+    url: "/driver/dashboard",
   },
   {
     key: "driver-title2",
-    label: "Management",
+    label: "Orders",
     isTitle: true,
   },
   {
-    key: "earnings",
-    label: "Earnings",
-    icon: "lucide:wallet",
-    url: "/invoice/list",
+    key: "my-orders",
+    label: "My Orders",
+    icon: "lucide:package",
+    url: "/driver/orders",
   },
   {
-    key: "schedule",
-    label: "My Schedule",
-    icon: "lucide:calendar",
-    url: "/apps/calendar",
+    key: "order-history",
+    label: "Order History",
+    icon: "lucide:archive",
+    url: "/driver/history",
   },
   {
-    key: "profile",
-    label: "My Profile",
-    icon: "lucide:user",
-    children: [
-      { key: "view-profile", label: "View Profile", url: "/user/grid" },
-      { key: "settings", label: "Account Settings", url: "/user/settings" },
-    ],
+    key: "driver-title3",
+    label: "Account",
+    isTitle: true,
   },
   {
-    key: "support",
-    label: "Support",
-    icon: "lucide:headphones",
-    children: [
-      { key: "help", label: "Help Center", url: "/faqs" },
-      { key: "chat", label: "Chat Support", url: "/apps/chat" },
-    ],
+    key: "settings",
+    label: "Account Settings",
+    icon: "lucide:settings",
+    url: "/user/settings",
   },
 ];
 

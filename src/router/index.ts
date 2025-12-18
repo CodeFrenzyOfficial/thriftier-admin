@@ -340,7 +340,7 @@ const router = createRouter({
         title: "Users",
         requiresAuth: true,
       },
-      component: () => import("@/views/user/list/index.vue"),
+      redirect: "/employees",
     },
     {
       path: "/user/grid",
@@ -359,6 +359,88 @@ const router = createRouter({
         requiresAuth: true,
       },
       component: () => import("@/views/user/settings/index.vue"),
+    },
+    {
+      path: "/orders",
+      name: "Orders",
+      meta: {
+        title: "Orders Management",
+        requiresAuth: true,
+      },
+      component: () => import("@/views/orders/list/index.vue"),
+    },
+    {
+      path: "/orders/:id",
+      name: "Order Details",
+      meta: {
+        title: "Order Details",
+        requiresAuth: true,
+      },
+      component: () => import("../views/orders/details/index.vue"),
+    },
+    {
+      path: "/drivers",
+      name: "Drivers",
+      meta: {
+        title: "Driver Management",
+        requiresAuth: true,
+      },
+      component: () => import("../views/drivers/list/index.vue"),
+    },
+    {
+      path: "/employees",
+      name: "Employees",
+      meta: {
+        title: "Employee Management",
+        requiresAuth: true,
+      },
+      component: () => import("../views/employees/list/index.vue"),
+    },
+    {
+      path: "/analytics",
+      name: "Analytics",
+      meta: {
+        title: "Analytics Dashboard",
+        requiresAuth: true,
+      },
+      component: () => import("../views/analytics/index.vue"),
+    },
+    // Driver Portal Routes
+    {
+      path: "/driver/dashboard",
+      name: "Driver Dashboard",
+      meta: {
+        title: "Driver Dashboard",
+        requiresAuth: true,
+      },
+      component: () => import("../views/driver/dashboard/index.vue"),
+    },
+    {
+      path: "/driver/orders",
+      name: "Driver Orders",
+      meta: {
+        title: "My Orders",
+        requiresAuth: true,
+      },
+      component: () => import("../views/driver/orders/index.vue"),
+    },
+    {
+      path: "/driver/orders/:id",
+      name: "Driver Order Details",
+      meta: {
+        title: "Order Details",
+        requiresAuth: true,
+      },
+      component: () => import("../views/driver/orders/details.vue"),
+    },
+    {
+      path: "/driver/history",
+      name: "Driver History",
+      meta: {
+        title: "Order History",
+        requiresAuth: true,
+      },
+      component: () => import("../views/driver/history/index.vue"),
     },
     {
       path: "/starter",

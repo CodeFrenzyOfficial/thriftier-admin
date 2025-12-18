@@ -47,7 +47,7 @@
                       icon="lucide:users"
                       class="size-12 text-default-300"
                     ></Icon>
-                    <span class="text-default-500">No users found</span>
+                    <span class="text-default-500">{{ emptyText }}</span>
                   </div>
                 </td>
               </tr>
@@ -142,7 +142,10 @@
     </div>
     <div class="card-footer">
       <p class="text-default-500 text-sm">
-        <span v-if="userStore.totalItems > 0">
+        <span v-if="props.useFilteredTotals">
+          Showing <b>{{ users.length }}</b> Results
+        </span>
+        <span v-else-if="userStore.totalItems > 0">
           Showing
           <b>{{ (userStore.currentPage - 1) * userStore.itemsPerPage + 1 }}</b>
           to
@@ -157,7 +160,7 @@
         <span v-else>No results found</span>
       </p>
       <nav
-        v-if="userStore.totalPages > 0"
+        v-if="!props.useFilteredTotals && userStore.totalPages > 0"
         class="flex items-center gap-2"
         aria-label="Pagination"
       >
@@ -222,6 +225,25 @@ import { useUserStore } from "@/stores/user";
 import EditUserModal from "./EditUserModal.vue";
 import DeleteUserModal from "./DeleteUserModal.vue";
 
+const props = withDefaults(
+  defineProps<{
+    includeRoles?: string[];
+    excludeRoles?: string[];
+    emptyText?: string;
+    fetchLimit?: number;
+    fetchPage?: number;
+    useFilteredTotals?: boolean;
+  }>(),
+  {
+    includeRoles: undefined,
+    excludeRoles: undefined,
+    emptyText: "No users found",
+    fetchLimit: 10,
+    fetchPage: 1,
+    useFilteredTotals: false,
+  }
+);
+
 const userStore = useUserStore();
 
 // Modal states
@@ -231,7 +253,7 @@ const selectedUser = ref<any>(null);
 
 // Fetch users on component mount
 onMounted(async () => {
-  await userStore.fetchUsers(1, 10);
+  await userStore.fetchUsers(props.fetchPage, props.fetchLimit);
 
   // Initialize Preline dropdowns
   setTimeout(() => {
@@ -267,7 +289,7 @@ const pageNumbers = computed(() => {
 // Go to specific page
 const goToPage = async (page: number) => {
   if (page < 1 || page > userStore.totalPages) return;
-  await userStore.fetchUsers(page, userStore.itemsPerPage);
+  await userStore.fetchUsers(page, props.fetchLimit);
 };
 
 // Use the users from the store (reactive)
@@ -276,7 +298,15 @@ const users = computed(() => {
     return [];
   }
 
-  return userStore.users.map((user) => {
+  let list = userStore.users;
+  if (props.includeRoles && props.includeRoles.length > 0) {
+    list = list.filter((u) => props.includeRoles!.includes(u.role));
+  }
+  if (props.excludeRoles && props.excludeRoles.length > 0) {
+    list = list.filter((u) => !props.excludeRoles!.includes(u.role));
+  }
+
+  return list.map((user) => {
     // Get initials from name
     const initials = user.name
       .split(" ")
