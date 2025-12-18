@@ -128,13 +128,13 @@
                   #{{ order.id.slice(0, 8) }}
                 </td>
                 <td class="px-4 py-4 whitespace-nowrap text-sm text-default-800 dark:text-default-200">
-                  {{ order.customerName || 'N/A' }}
+                  {{ order.user?.name || 'N/A' }}
                 </td>
                 <td class="px-4 py-4 text-sm text-default-800 dark:text-default-200">
-                  {{ order.pickupLocation || 'N/A' }}
+                  {{ order.pickupAddress || 'N/A' }}
                 </td>
                 <td class="px-4 py-4 text-sm text-default-800 dark:text-default-200">
-                  {{ order.deliveryLocation || 'N/A' }}
+                  {{ order.deliveryAddress || 'N/A' }}
                 </td>
                 <td class="px-4 py-4 whitespace-nowrap">
                   <span

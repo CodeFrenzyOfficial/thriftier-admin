@@ -79,7 +79,7 @@
                 Name
               </label>
               <p class="text-default-900 dark:text-default-100 font-medium">
-                {{ order.customerName || 'N/A' }}
+                {{ order.user?.name || 'N/A' }}
               </p>
             </div>
             <div>
@@ -87,7 +87,7 @@
                 Phone
               </label>
               <p class="text-default-900 dark:text-default-100 font-medium">
-                {{ order.customerPhone || 'N/A' }}
+                {{ order.user?.phoneNumber || 'N/A' }}
               </p>
             </div>
             <div>
@@ -95,7 +95,7 @@
                 Email
               </label>
               <p class="text-default-900 dark:text-default-100 font-medium">
-                {{ order.customerEmail || 'N/A' }}
+                {{ order.user?.email || 'N/A' }}
               </p>
             </div>
           </div>
@@ -115,23 +115,15 @@
                 Address
               </label>
               <p class="text-default-900 dark:text-default-100 font-medium">
-                {{ order.pickupLocation || 'N/A' }}
+                {{ order.pickupAddress || 'N/A' }}
               </p>
             </div>
-            <div>
+            <div v-if="order.scheduledPickupTime">
               <label class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1">
-                Contact
+                Scheduled Time
               </label>
               <p class="text-default-900 dark:text-default-100 font-medium">
-                {{ order.pickupContact || 'N/A' }}
-              </p>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1">
-                Phone
-              </label>
-              <p class="text-default-900 dark:text-default-100 font-medium">
-                {{ order.pickupPhone || 'N/A' }}
+                {{ formatDate(order.scheduledPickupTime) }}
               </p>
             </div>
           </div>
@@ -151,23 +143,15 @@
                 Address
               </label>
               <p class="text-default-900 dark:text-default-100 font-medium">
-                {{ order.deliveryLocation || 'N/A' }}
+                {{ order.deliveryAddress || 'N/A' }}
               </p>
             </div>
-            <div>
+            <div v-if="order.deliveryTime">
               <label class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1">
-                Contact
+                Delivered At
               </label>
               <p class="text-default-900 dark:text-default-100 font-medium">
-                {{ order.deliveryContact || 'N/A' }}
-              </p>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1">
-                Phone
-              </label>
-              <p class="text-default-900 dark:text-default-100 font-medium">
-                {{ order.deliveryPhone || 'N/A' }}
+                {{ formatDate(order.deliveryTime) }}
               </p>
             </div>
           </div>
@@ -200,10 +184,18 @@
             </div>
             <div>
               <label class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1">
-                Dimensions
+                Estimated Price
               </label>
               <p class="text-default-900 dark:text-default-100 font-medium">
-                {{ order.packageDimensions || 'N/A' }}
+                ${{ order.estimatedPrice?.toFixed(2) || 'N/A' }}
+              </p>
+            </div>
+            <div v-if="order.finalPrice">
+              <label class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1">
+                Final Price
+              </label>
+              <p class="text-default-900 dark:text-default-100 font-medium">
+                ${{ order.finalPrice.toFixed(2) }}
               </p>
             </div>
           </div>

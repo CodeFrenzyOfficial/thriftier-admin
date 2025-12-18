@@ -109,13 +109,13 @@
                     #{{ order.id.slice(0, 8) }}
                   </td>
                   <td class="px-4 py-4 whitespace-nowrap text-sm text-default-800 dark:text-default-200">
-                    {{ order.customerName || 'N/A' }}
+                    {{ order.user?.name || 'N/A' }}
                   </td>
                   <td class="px-4 py-4 text-sm text-default-800 dark:text-default-200">
-                    {{ truncateText(order.pickupLocation || 'N/A', 30) }}
+                    {{ truncateText(order.pickupAddress || 'N/A', 30) }}
                   </td>
                   <td class="px-4 py-4 text-sm text-default-800 dark:text-default-200">
-                    {{ truncateText(order.deliveryLocation || 'N/A', 30) }}
+                    {{ truncateText(order.deliveryAddress || 'N/A', 30) }}
                   </td>
                   <td class="px-4 py-4 whitespace-nowrap">
                     <span
@@ -248,7 +248,7 @@ const filteredOrders = computed(() => {
     const search = filters.value.search.toLowerCase();
     result = result.filter((o: any) =>
       o.id.toLowerCase().includes(search) ||
-      (o.customerName && o.customerName.toLowerCase().includes(search))
+      (o.user?.name && o.user.name.toLowerCase().includes(search))
     );
   }
 

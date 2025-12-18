@@ -1,51 +1,410 @@
 <template>
   <Vertical>
-    <PageTitle subtitle="Orders" title="Details" />
+    <PageTitle
+      title="Order Details"
+      subtitle="View complete order information"
+    />
 
-    <div class="card">
-      <div class="card-header">
-        <h6 class="card-title">Order Details</h6>
-        <button
-          @click="$router.push('/orders')"
-          class="btn btn-sm bg-default-200"
-        >
-          ← Back to Orders
-        </button>
-      </div>
+    <div class="space-y-6">
+      <!-- Back Button -->
+      <button
+        @click="router.back()"
+        class="flex items-center gap-2 text-default-600 dark:text-default-400 hover:text-default-900 dark:hover:text-default-100"
+      >
+        <Icon icon="lucide:arrow-left" class="w-5 h-5" />
+        <span>Back to Orders</span>
+      </button>
 
-      <div class="card-body text-center">
-        <svg
-          class="mx-auto h-12 w-12 text-primary-500"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-          />
-        </svg>
-        <h3 class="mt-4 text-lg font-medium text-default-900">
-          Order Details Page
-        </h3>
-        <p class="mt-2 text-sm text-default-500">
-          This page will show complete order information including:
+      <div v-if="loading" class="text-center py-12">
+        <div
+          class="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"
+        ></div>
+        <p class="mt-4 text-default-600 dark:text-default-400">
+          Loading order details...
         </p>
-        <ul class="mt-4 text-sm text-default-600 space-y-2">
-          <li>• Order timeline and status history</li>
-          <li>• Customer and driver information</li>
-          <li>• Pickup and delivery addresses</li>
-          <li>• Package details and images</li>
-          <li>• Pricing breakdown</li>
-        </ul>
       </div>
+
+      <div v-else-if="!order" class="text-center py-12">
+        <Icon
+          icon="lucide:package-x"
+          class="w-20 h-20 mx-auto text-default-300 dark:text-default-600 mb-4"
+        />
+        <p class="text-xl text-default-700 dark:text-default-300">
+          Order not found
+        </p>
+      </div>
+
+      <template v-else>
+        <!-- Order Header -->
+        <div class="card">
+          <div class="p-6">
+            <div class="flex items-start justify-between flex-wrap gap-4">
+              <div>
+                <h1
+                  class="text-2xl font-bold text-default-900 dark:text-default-100"
+                >
+                  Order #{{ order.orderNumber }}
+                </h1>
+                <p class="text-default-600 dark:text-default-400 mt-1">
+                  Created {{ formatDate(order.createdAt) }}
+                </p>
+              </div>
+              <div class="flex items-center gap-3">
+                <span
+                  class="inline-flex px-3 py-1.5 text-sm font-semibold rounded-full"
+                  :class="getStatusClass(order.status)"
+                >
+                  {{ order.status }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Details Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Customer Information -->
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title flex items-center gap-2">
+                <Icon icon="lucide:user" class="w-5 h-5" />
+                Customer Information
+              </h4>
+            </div>
+            <div class="p-6 space-y-4">
+              <div>
+                <label
+                  class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1"
+                >
+                  Name
+                </label>
+                <p class="text-default-900 dark:text-default-100 font-medium">
+                  {{ order.user?.name || "N/A" }}
+                </p>
+              </div>
+              <div>
+                <label
+                  class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1"
+                >
+                  Email
+                </label>
+                <p class="text-default-900 dark:text-default-100 font-medium">
+                  {{ order.user?.email || "N/A" }}
+                </p>
+              </div>
+              <div>
+                <label
+                  class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1"
+                >
+                  Phone
+                </label>
+                <p class="text-default-900 dark:text-default-100 font-medium">
+                  {{ order.user?.phoneNumber || "N/A" }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Driver Information -->
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title flex items-center gap-2">
+                <Icon icon="lucide:truck" class="w-5 h-5" />
+                Driver Information
+              </h4>
+            </div>
+            <div class="p-6">
+              <div v-if="order.driver" class="space-y-4">
+                <div>
+                  <label
+                    class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1"
+                  >
+                    Name
+                  </label>
+                  <p class="text-default-900 dark:text-default-100 font-medium">
+                    {{ order.driver.name }}
+                  </p>
+                </div>
+                <div>
+                  <label
+                    class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1"
+                  >
+                    Email
+                  </label>
+                  <p class="text-default-900 dark:text-default-100 font-medium">
+                    {{ order.driver.email }}
+                  </p>
+                </div>
+                <div>
+                  <label
+                    class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1"
+                  >
+                    Phone
+                  </label>
+                  <p class="text-default-900 dark:text-default-100 font-medium">
+                    {{ order.driver.phoneNumber || "N/A" }}
+                  </p>
+                </div>
+              </div>
+              <div v-else class="text-center py-4">
+                <Icon
+                  icon="lucide:user-x"
+                  class="w-12 h-12 mx-auto text-default-300 dark:text-default-600 mb-2"
+                />
+                <p class="text-default-600 dark:text-default-400">
+                  No driver assigned yet
+                </p>
+                <button
+                  @click="openAssignDriverModal"
+                  class="btn bg-primary text-white mt-3"
+                >
+                  <Icon icon="lucide:user-plus" class="w-4 h-4 mr-2" />
+                  Assign Driver
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pickup Information -->
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title flex items-center gap-2">
+                <Icon icon="lucide:map-pin" class="w-5 h-5" />
+                Pickup Location
+              </h4>
+            </div>
+            <div class="p-6 space-y-4">
+              <div>
+                <label
+                  class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1"
+                >
+                  Address
+                </label>
+                <p class="text-default-900 dark:text-default-100 font-medium">
+                  {{ order.pickupAddress || "N/A" }}
+                </p>
+              </div>
+              <div v-if="order.scheduledPickupTime">
+                <label
+                  class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1"
+                >
+                  Scheduled Time
+                </label>
+                <p class="text-default-900 dark:text-default-100 font-medium">
+                  {{ formatDate(order.scheduledPickupTime) }}
+                </p>
+              </div>
+              <div v-if="order.pickupTime">
+                <label
+                  class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1"
+                >
+                  Actual Pickup Time
+                </label>
+                <p class="text-default-900 dark:text-default-100 font-medium">
+                  {{ formatDate(order.pickupTime) }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delivery Information -->
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title flex items-center gap-2">
+                <Icon icon="lucide:home" class="w-5 h-5" />
+                Delivery Location
+              </h4>
+            </div>
+            <div class="p-6 space-y-4">
+              <div>
+                <label
+                  class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1"
+                >
+                  Address
+                </label>
+                <p class="text-default-900 dark:text-default-100 font-medium">
+                  {{ order.deliveryAddress || "N/A" }}
+                </p>
+              </div>
+              <div v-if="order.deliveryTime">
+                <label
+                  class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1"
+                >
+                  Delivered At
+                </label>
+                <p class="text-default-900 dark:text-default-100 font-medium">
+                  {{ formatDate(order.deliveryTime) }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Package Details -->
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title flex items-center gap-2">
+              <Icon icon="lucide:package" class="w-5 h-5" />
+              Package Details
+            </h4>
+          </div>
+          <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div>
+                <label
+                  class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1"
+                >
+                  Description
+                </label>
+                <p class="text-default-900 dark:text-default-100 font-medium">
+                  {{ order.packageDescription || "N/A" }}
+                </p>
+              </div>
+              <div>
+                <label
+                  class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1"
+                >
+                  Weight
+                </label>
+                <p class="text-default-900 dark:text-default-100 font-medium">
+                  {{
+                    order.packageWeight ? order.packageWeight + " kg" : "N/A"
+                  }}
+                </p>
+              </div>
+              <div>
+                <label
+                  class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1"
+                >
+                  Estimated Price
+                </label>
+                <p class="text-default-900 dark:text-default-100 font-medium">
+                  ${{ order.estimatedPrice?.toFixed(2) || "N/A" }}
+                </p>
+              </div>
+              <div v-if="order.finalPrice">
+                <label
+                  class="block text-sm font-medium text-default-700 dark:text-default-400 mb-1"
+                >
+                  Final Price
+                </label>
+                <p class="text-default-900 dark:text-default-100 font-medium">
+                  ${{ order.finalPrice.toFixed(2) }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Package Images (if uploaded) -->
+        <div
+          v-if="order.packageImages && order.packageImages.length > 0"
+          class="card"
+        >
+          <div class="card-header">
+            <h4 class="card-title flex items-center gap-2">
+              <Icon icon="lucide:image" class="w-5 h-5" />
+              Package Images
+            </h4>
+          </div>
+          <div class="p-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div
+                v-for="(image, index) in order.packageImages"
+                :key="index"
+                class="relative aspect-square rounded-lg overflow-hidden bg-default-100 dark:bg-default-800"
+              >
+                <img
+                  :src="image"
+                  :alt="`Package ${index + 1}`"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notes / Special Instructions -->
+        <div v-if="order.notes" class="card">
+          <div class="card-header">
+            <h4 class="card-title flex items-center gap-2">
+              <Icon icon="lucide:sticky-note" class="w-5 h-5" />
+              Notes & Special Instructions
+            </h4>
+          </div>
+          <div class="p-6">
+            <p
+              class="text-default-800 dark:text-default-200 whitespace-pre-wrap leading-relaxed"
+            >
+              {{ order.notes }}
+            </p>
+          </div>
+        </div>
+      </template>
     </div>
   </Vertical>
 </template>
 
 <script setup lang="ts">
-import PageTitle from "@/components/PageTitle.vue";
+import { ref, onMounted } from "vue";
+import { Icon } from "@iconify/vue";
+import { useRouter, useRoute } from "vue-router";
 import Vertical from "@/layouts/vertical.vue";
+import PageTitle from "@/components/PageTitle.vue";
+import { useOrderStore } from "@/stores/order";
+
+const router = useRouter();
+const route = useRoute();
+const orderStore = useOrderStore();
+
+const loading = ref(false);
+const order = ref<any>(null);
+
+const orderId = route.params.id as string;
+
+const fetchOrderDetails = async () => {
+  loading.value = true;
+  try {
+    order.value = await orderStore.fetchOrderById(orderId);
+  } catch (error) {
+    console.error("Failed to fetch order details:", error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+const getStatusClass = (status: string) => {
+  switch (status) {
+    case "PENDING":
+      return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400";
+    case "IN_PROGRESS":
+      return "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400";
+    case "COMPLETED":
+      return "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400";
+    case "CANCELLED":
+      return "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400";
+    default:
+      return "bg-default-100 text-default-800 dark:bg-default-700 dark:text-default-300";
+  }
+};
+
+const formatDate = (dateString: string | Date) => {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  }).format(date);
+};
+
+const openAssignDriverModal = () => {
+  // TODO: Open assign driver modal
+  console.log("Open assign driver modal for order:", orderId);
+};
+
+onMounted(() => {
+  fetchOrderDetails();
+});
 </script>

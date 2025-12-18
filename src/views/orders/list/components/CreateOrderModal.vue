@@ -11,7 +11,7 @@
           <div class="fixed inset-0 bg-black/50 transition-opacity"></div>
 
           <!-- Modal -->
-          <div class="relative bg-white dark:bg-[#18181B] rounded-lg shadow-xl max-w-2xl w-full p-6">
+          <div class="relative bg-card rounded-lg shadow-xl max-w-2xl w-full p-6">
             <!-- Header -->
             <div class="flex items-center justify-between mb-6">
               <h2 class="text-xl font-bold text-default-900 dark:text-default-100">
@@ -19,7 +19,7 @@
               </h2>
               <button
                 @click="$emit('close')"
-                class="text-default-400 hover:text-default-600"
+                class="text-default-400 hover:text-default-600 dark:hover:text-default-300 transition-colors"
               >
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -37,7 +37,7 @@
                 <select
                   v-model="form.userId"
                   required
-                  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#27272A] text-default-900 dark:text-default-100 focus:ring-2 focus:ring-primary-500"
+                  class="form-input"
                 >
                   <option value="">Select Customer</option>
                   <option v-for="user in users" :key="user.id" :value="user.id">
@@ -55,7 +55,7 @@
                   v-model="form.pickupAddress"
                   required
                   rows="2"
-                  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#27272A] text-default-900 dark:text-default-100 focus:ring-2 focus:ring-primary-500"
+                  class="form-input"
                   placeholder="Enter pickup address"
                 ></textarea>
               </div>
@@ -69,7 +69,7 @@
                   v-model="form.deliveryAddress"
                   required
                   rows="2"
-                  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#27272A] text-default-900 dark:text-default-100 focus:ring-2 focus:ring-primary-500"
+                  class="form-input"
                   placeholder="Enter delivery address"
                 ></textarea>
               </div>
@@ -83,7 +83,7 @@
                   v-model="form.packageDescription"
                   required
                   rows="3"
-                  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#27272A] text-default-900 dark:text-default-100 focus:ring-2 focus:ring-primary-500"
+                  class="form-input"
                   placeholder="Describe the package"
                 ></textarea>
               </div>
@@ -98,7 +98,7 @@
                     v-model.number="form.packageWeight"
                     type="number"
                     step="0.1"
-                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#27272A] text-default-900 dark:text-default-100 focus:ring-2 focus:ring-primary-500"
+                    class="form-input"
                     placeholder="0.0"
                   />
                 </div>
@@ -111,7 +111,7 @@
                     type="number"
                     step="0.01"
                     required
-                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-[#27272A] text-default-900 dark:text-default-100 focus:ring-2 focus:ring-primary-500"
+                    class="form-input"
                     placeholder="0.00"
                   />
                 </div>
@@ -127,14 +127,14 @@
                 <button
                   type="button"
                   @click="$emit('close')"
-                  class="px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg text-default-700 dark:text-default-300 hover:bg-gray-50 dark:hover:bg-[#27272A] transition-colors"
+                  class="btn bg-default-200 dark:bg-default-700 text-default-700 dark:text-default-300 hover:bg-default-300 dark:hover:bg-default-600 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   :disabled="loading"
-                  class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  class="btn bg-primary text-white hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   {{ loading ? "Creating..." : "Create Order" }}
                 </button>
