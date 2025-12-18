@@ -245,12 +245,6 @@ import { useOrderStore } from "@/stores/order";
 import EditUserModal from "@/views/user/list/components/EditUserModal.vue";
 import DeleteUserModal from "@/views/user/list/components/DeleteUserModal.vue";
 
-declare global {
-  interface Window {
-    HSStaticMethods?: { autoInit: () => void };
-  }
-}
-
 const userStore = useUserStore();
 const orderStore = useOrderStore();
 
@@ -275,7 +269,7 @@ onMounted(async () => {
   }
 
   setTimeout(() => {
-    if (window.HSStaticMethods?.autoInit) window.HSStaticMethods.autoInit();
+    if (window.HSStaticMethods) window.HSStaticMethods.autoInit();
   }, 100);
 });
 
@@ -365,7 +359,7 @@ watch(
     if (currentPage.value > totalPages.value) currentPage.value = 1;
     await nextTick();
     setTimeout(() => {
-      if (window.HSStaticMethods?.autoInit) window.HSStaticMethods.autoInit();
+      if (window.HSStaticMethods) window.HSStaticMethods.autoInit();
     }, 100);
   }
 );

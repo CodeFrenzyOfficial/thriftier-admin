@@ -260,6 +260,18 @@ class ApiService {
    * POST request
    */
   async post<T>(endpoint: string, data?: any): Promise<T> {
+    // Handle FormData differently (don't stringify, don't set Content-Type)
+    if (data instanceof FormData) {
+      return this.request<T>(endpoint, {
+        method: "POST",
+        body: data,
+        headers: {
+          // Remove Content-Type to let browser set it with boundary
+          "Content-Type": undefined as any,
+        },
+      });
+    }
+    
     return this.request<T>(endpoint, {
       method: "POST",
       body: JSON.stringify(data),

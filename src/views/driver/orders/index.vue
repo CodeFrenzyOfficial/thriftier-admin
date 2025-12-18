@@ -345,7 +345,7 @@ const viewOrder = (orderId: string) => {
 
 const startDelivery = async (orderId: string) => {
   try {
-    await orderStore.updateOrderStatus(orderId, 'IN_PROGRESS');
+    await orderStore.updateStatus(orderId, 'IN_PROGRESS');
     await fetchDriverOrders(); // Refresh
   } catch (error) {
     console.error('Failed to start delivery:', error);
@@ -354,7 +354,7 @@ const startDelivery = async (orderId: string) => {
 
 const completeDelivery = async (orderId: string) => {
   try {
-    await orderStore.updateOrderStatus(orderId, 'COMPLETED');
+    await orderStore.updateStatus(orderId, 'COMPLETED');
     await fetchDriverOrders(); // Refresh
   } catch (error) {
     console.error('Failed to complete delivery:', error);

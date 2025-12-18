@@ -186,7 +186,7 @@ watch(() => props.isOpen, (isOpen) => {
 
 async function fetchUsers() {
   try {
-    await userStore.fetchUsers({ limit: 100 });
+    await userStore.fetchUsers(1, 100);
     users.value = userStore.users.filter((u: any) => u.role === "USER");
   } catch (err) {
     console.error("Failed to fetch users:", err);

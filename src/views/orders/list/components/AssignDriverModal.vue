@@ -93,7 +93,7 @@ watch(() => props.isOpen, (isOpen) => {
 
 async function fetchDrivers() {
   try {
-    await userStore.fetchUsers({ limit: 100 });
+    await userStore.fetchUsers(1, 100);
     drivers.value = userStore.users.filter((u: any) => u.role === "DRIVER");
   } catch (err) {
     console.error("Failed to fetch drivers:", err);

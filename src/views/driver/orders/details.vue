@@ -266,7 +266,7 @@ const orderId = route.params.id as string;
 const fetchOrderDetails = async () => {
   loading.value = true;
   try {
-    order.value = await orderStore.getOrderById(orderId);
+    order.value = await orderStore.fetchOrderById(orderId);
   } catch (error) {
     console.error('Failed to fetch order details:', error);
   } finally {
@@ -302,7 +302,7 @@ const formatDate = (dateString: string) => {
 
 const startDelivery = async () => {
   try {
-    await orderStore.updateOrderStatus(orderId, 'IN_PROGRESS');
+    await orderStore.updateStatus(orderId, 'IN_PROGRESS');
     await fetchOrderDetails(); // Refresh
   } catch (error) {
     console.error('Failed to start delivery:', error);
@@ -311,7 +311,7 @@ const startDelivery = async () => {
 
 const completeDelivery = async () => {
   try {
-    await orderStore.updateOrderStatus(orderId, 'COMPLETED');
+    await orderStore.updateStatus(orderId, 'COMPLETED');
     await fetchOrderDetails(); // Refresh
   } catch (error) {
     console.error('Failed to complete delivery:', error);

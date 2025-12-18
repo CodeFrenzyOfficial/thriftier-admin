@@ -196,14 +196,11 @@ class OrderService {
       formData.append("images", image);
     });
 
+    // Note: Don't set Content-Type header for FormData
+    // The browser will automatically set it with the correct boundary
     return await api.post<string[]>(
       `/orders/${orderId}/upload-images`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
+      formData
     );
   }
 }
