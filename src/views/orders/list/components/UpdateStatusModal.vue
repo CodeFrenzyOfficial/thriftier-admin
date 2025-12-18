@@ -7,9 +7,10 @@
         @click.self="$emit('close')"
       >
         <div class="flex min-h-screen items-center justify-center p-4">
-          <div class="fixed inset-0 bg-black/50"></div>
+          <div class="fixed inset-0 bg-black/50" @click="$emit('close')"></div>
           <div
             class="relative bg-card rounded-lg shadow-xl max-w-md w-full p-6"
+            @click.stop
           >
             <div class="flex items-center justify-between mb-6">
               <h2

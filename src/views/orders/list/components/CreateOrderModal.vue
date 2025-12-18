@@ -8,10 +8,10 @@
       >
         <div class="flex min-h-screen items-center justify-center p-4">
           <!-- Overlay -->
-          <div class="fixed inset-0 bg-black/50 transition-opacity"></div>
+          <div class="fixed inset-0 bg-black/50 transition-opacity" @click="$emit('close')"></div>
 
           <!-- Modal -->
-          <div class="relative bg-card rounded-lg shadow-xl max-w-2xl w-full p-6">
+          <div class="relative bg-card rounded-lg shadow-xl max-w-2xl w-full p-6" @click.stop>
             <!-- Header -->
             <div class="flex items-center justify-between mb-6">
               <h2 class="text-xl font-bold text-default-900 dark:text-default-100">
