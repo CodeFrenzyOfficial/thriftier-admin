@@ -405,6 +405,15 @@ const router = createRouter({
       },
       component: () => import("../views/analytics/index.vue"),
     },
+    {
+      path: "/contacts",
+      name: "Contact Submissions",
+      meta: {
+        title: "Contact Form Submissions",
+        requiresAuth: true,
+      },
+      component: () => import("../views/contacts/list/index.vue"),
+    },
     // Driver Portal Routes
     {
       path: "/driver/dashboard",
@@ -822,15 +831,15 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
   const isAuthRoute = to.path.includes("-auth/");
 
-  console.log("Route Guard:", {
-    to: to.path,
-    from: from.path,
-    requiresAuth,
-    isAuthRoute,
-    isAuthenticated: authStore.isAuthenticated,
-    hasUser: !!authStore.user,
-    initialized: authStore.initialized,
-  });
+  // console.log("Route Guard:", {
+  //   to: to.path,
+  //   from: from.path,
+  //   requiresAuth,
+  //   isAuthRoute,
+  //   isAuthenticated: authStore.isAuthenticated,
+  //   hasUser: !!authStore.user,
+  //   initialized: authStore.initialized,
+  // });
 
   if (requiresAuth && !authStore.isAuthenticated) {
     // Redirect to login if trying to access protected route

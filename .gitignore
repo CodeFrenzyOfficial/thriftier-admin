@@ -2,8 +2,10 @@ node_modules
 dist
 .env
 npm-debug.log*
+temp_auto_push.bat
 yarn-debug.log*
 yarn-error.log*
 .DS_Store
 .idea
-.vscode
+.gitignore
+branch_structure.json
