@@ -40,6 +40,12 @@ export const adminMenuItems: MenuItemType[] = [
     url: "/employees",
   },
   {
+    key: "contacts",
+    label: "Contact Submissions",
+    icon: "lucide:mail",
+    url: "/contacts",
+  },
+  {
     key: "analytics-title",
     label: "Analytics",
     isTitle: true,
