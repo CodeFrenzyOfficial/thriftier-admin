@@ -186,14 +186,15 @@ class ApiService {
     if (isJson) {
       const jsonResponse = await response.json();
 
-      // If response has pagination, return both data and pagination
+      // If response has pagination (or meta), return both data and pagination/meta
       if (
-        jsonResponse.pagination !== undefined &&
+        (jsonResponse.pagination !== undefined || jsonResponse.meta !== undefined) &&
         jsonResponse.data !== undefined
       ) {
         return {
           data: jsonResponse.data,
           pagination: jsonResponse.pagination,
+          meta: jsonResponse.meta,
         } as T;
       }
 
